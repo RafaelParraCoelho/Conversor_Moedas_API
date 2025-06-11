@@ -1,9 +1,6 @@
 import requests
 import pandas as pd
 
-# Lista para armazenar o histórico das conversões
-historico = []
-
 
 def mostrar_cotacoes_em_brl():
     """
@@ -23,12 +20,13 @@ def mostrar_cotacoes_em_brl():
         else:
             print(f"Erro ao acessar a API para {moeda}")
 
-def obter_taxa_moeda(origem: str, destino: str, valor: float):
+def obter_taxa_moeda(origem: str, destino: str, valor: float) -> dict[str, str | float]:
     """Fetches convertion rates and displays them
 
     :param str origem: base currency
     :param str destino: target currency
     :param float valor: amount in base currency
+    :return dict[str, str | float]: dictionary with exchange rate data
     """
     url = f"https://api.frankfurter.app/latest?amount={valor}&from={origem}&to={destino}"
     resposta = requests.get(url)
@@ -44,19 +42,20 @@ def obter_taxa_moeda(origem: str, destino: str, valor: float):
     print(f"\nTaxa de câmbio: 1 {origem} = {taxa:.2f} {destino}")
     print(f"{valor} {origem} = {resultado:.2f} {destino}")
 
-    # Adiciona ao histórico
-    historico.append({
+    return {
         'origem': origem,
         'destino': destino,
         'valor': valor,
         'resultado': resultado,
         'taxa': round(taxa, 4)
-    })
+    }
 
 # Programa principal
 if __name__ == "__main__":
     print("=== Conversor de Moedas ===\n")
     mostrar_cotacoes_em_brl()
+
+    historico = []
 
     while True:
         moeda_origem = input("\nDigite a moeda de origem (ex: USD, EUR, BRL): ").upper()
@@ -64,7 +63,7 @@ if __name__ == "__main__":
 
         try:
             valor = float(input(f"Digite o valor em {moeda_origem}: "))
-            obter_taxa_moeda(moeda_origem, moeda_destino, valor)
+            historico.append(obter_taxa_moeda(moeda_origem, moeda_destino, valor))
         except ValueError:
             print("Valor inválido. Digite um número válido.")
             continue
