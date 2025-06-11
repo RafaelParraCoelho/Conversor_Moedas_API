@@ -4,8 +4,11 @@ import pandas as pd
 # Lista para armazenar o histórico das conversões
 historico = []
 
-# Função para mostrar cotações em relação ao BRL
+
 def mostrar_cotacoes_em_brl():
+    """
+    Shows exchange rates relative to BRL.
+    """
     moedas = ["USD", "EUR", "GBP", "JPY", "CAD", "AUD", "CHF", "CNY", "INR"]
     print("Cotação de moedas em relação ao Real (BRL):\n")
     
@@ -20,8 +23,13 @@ def mostrar_cotacoes_em_brl():
         else:
             print(f"Erro ao acessar a API para {moeda}")
 
-# Função para obter taxa e mostrar conversão
 def obter_taxa_moeda(origem: str, destino: str, valor: float):
+    """Fetches convertion rates and displays them
+
+    :param str origem: base currency
+    :param str destino: target currency
+    :param float valor: amount in base currency
+    """
     url = f"https://api.frankfurter.app/latest?amount={valor}&from={origem}&to={destino}"
     resposta = requests.get(url)
 
