@@ -21,7 +21,7 @@ def mostrar_cotacoes_em_brl():
             print(f"Erro ao acessar a API para {moeda}")
 
 # Função para obter taxa e mostrar conversão
-def obter_taxa_moeda(origem, destino, valor):
+def obter_taxa_moeda(origem: str, destino: str, valor: float):
     url = f"https://api.frankfurter.app/latest?amount={valor}&from={origem}&to={destino}"
     resposta = requests.get(url)
 
