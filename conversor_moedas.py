@@ -1,8 +1,19 @@
 import requests
 import pandas as pd
+from datetime import datetime
 
 # Lista para armazenar o histórico das conversões
 historico = []
+
+# Função para obter moedas suportadas pela API
+def obter_moedas_suportadas():
+    url = "https://api.frankfurter.app/currencies"
+    resposta = requests.get(url)
+    if resposta.status_code == 200:
+        return resposta.json()  # retorna um dicionário { "USD": "United States Dollar", "BRL": "Brazilian Real", ... }
+    else:
+        print("Erro ao buscar moedas suportadas.")
+        return {}
 
 # Função para mostrar cotações em relação ao BRL
 def mostrar_cotacoes_em_brl():
@@ -38,6 +49,7 @@ def obter_taxa_moeda(origem, destino, valor):
 
     # Adiciona ao histórico
     historico.append({
+        'data_hora': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         'origem': origem,
         'destino': destino,
         'valor': valor,
@@ -49,6 +61,12 @@ def obter_taxa_moeda(origem, destino, valor):
 if __name__ == "__main__":
     print("=== Conversor de Moedas ===\n")
     mostrar_cotacoes_em_brl()
+    
+    moedas_suportadas = obter_moedas_suportadas()
+
+    print("\nMoedas suportadas:")
+    for codigo, nome in moedas_suportadas.items():
+        print(f"{codigo} - {nome}")
 
     while True:
         moeda_origem = input("\nDigite a moeda de origem (ex: USD, EUR, BRL): ").upper()

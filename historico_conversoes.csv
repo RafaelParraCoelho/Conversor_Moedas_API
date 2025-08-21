@@ -1,2 +1,2 @@
-origem,destino,valor,resultado,taxa
-BRL,USD,100.0,17.9957,0.18
+data_hora,origem,destino,valor,resultado,taxa
+2025-08-20 22:56:45,BRL,USD,1000.0,182.36,0.1824
