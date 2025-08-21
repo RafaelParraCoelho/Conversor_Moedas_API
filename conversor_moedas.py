@@ -2,8 +2,9 @@ import requests
 import pandas as pd
 from datetime import datetime
 
+# Lista para armazenar o histórico das conversões
+historico = []
 
-<<<<<<< HEAD
 # Função para obter moedas suportadas pela API
 def obter_moedas_suportadas():
     url = "https://api.frankfurter.app/currencies"
@@ -15,12 +16,7 @@ def obter_moedas_suportadas():
         return {}
 
 # Função para mostrar cotações em relação ao BRL
-=======
->>>>>>> 2dd3ab4bdf616125c491e8abdd70e1013b63b680
 def mostrar_cotacoes_em_brl():
-    """
-    Shows exchange rates relative to BRL.
-    """
     moedas = ["USD", "EUR", "GBP", "JPY", "CAD", "AUD", "CHF", "CNY", "INR"]
     print("Cotação de moedas em relação ao Real (BRL):\n")
     
@@ -35,14 +31,8 @@ def mostrar_cotacoes_em_brl():
         else:
             print(f"Erro ao acessar a API para {moeda}")
 
-def obter_taxa_moeda(origem: str, destino: str, valor: float) -> dict[str, str | float]:
-    """Fetches convertion rates and displays them
-
-    :param str origem: base currency
-    :param str destino: target currency
-    :param float valor: amount in base currency
-    :return dict[str, str | float]: dictionary with exchange rate data
-    """
+# Função para obter taxa e mostrar conversão
+def obter_taxa_moeda(origem, destino, valor):
     url = f"https://api.frankfurter.app/latest?amount={valor}&from={origem}&to={destino}"
     resposta = requests.get(url)
 
@@ -57,19 +47,15 @@ def obter_taxa_moeda(origem: str, destino: str, valor: float) -> dict[str, str |
     print(f"\nTaxa de câmbio: 1 {origem} = {taxa:.2f} {destino}")
     print(f"{valor} {origem} = {resultado:.2f} {destino}")
 
-<<<<<<< HEAD
     # Adiciona ao histórico
     historico.append({
         'data_hora': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-=======
-    return {
->>>>>>> 2dd3ab4bdf616125c491e8abdd70e1013b63b680
         'origem': origem,
         'destino': destino,
         'valor': valor,
         'resultado': resultado,
         'taxa': round(taxa, 4)
-    }
+    })
 
 # Programa principal
 if __name__ == "__main__":
@@ -82,15 +68,20 @@ if __name__ == "__main__":
     for codigo, nome in moedas_suportadas.items():
         print(f"{codigo} - {nome}")
 
-    historico = []
-
     while True:
         moeda_origem = input("\nDigite a moeda de origem (ex: USD, EUR, BRL): ").upper()
+        if moeda_origem not in moedas_suportadas:
+            print("Moeda de origem não suportada.")
+            continue
+
         moeda_destino = input("Digite a moeda de destino (ex: USD, EUR, BRL): ").upper()
+        if moeda_destino not in moedas_suportadas:
+            print("Moeda de destino não suportada.")
+            continue
 
         try:
             valor = float(input(f"Digite o valor em {moeda_origem}: "))
-            historico.append(obter_taxa_moeda(moeda_origem, moeda_destino, valor))
+            obter_taxa_moeda(moeda_origem, moeda_destino, valor)
         except ValueError:
             print("Valor inválido. Digite um número válido.")
             continue
