@@ -1,16 +1,16 @@
-# Conversor de Moedas em Python
+# Currency Converter in Python
 
-Este projeto é um **conversor de moedas** simples que utiliza uma API pública para obter taxas de câmbio em tempo real. Ele permite que o usuário converta valores entre diferentes moedas, armazene um histórico das conversões e exporte esse histórico para um arquivo CSV.
+This project is a **simple currency converter** that uses a public API to fetch real-time exchange rates. It allows the user to convert values between different currencies, store a conversion history, and export that history to a CSV file.
 
-## Funcionalidades
+## Features
 
-- Consulta taxas de câmbio atualizadas via API.
-- Conversão de valores entre moedas escolhidas pelo usuário.
-- Armazenamento do histórico das conversões feitas durante a execução.
-- Exportação do histórico para um arquivo CSV chamado `historico_conversoes.csv`.
+- Fetches up-to-date exchange rates via an API.
+- Converts amounts between user-selected currencies.
+- Stores a history of conversions made during the session.
+- Exports the conversion history to a CSV file named `historico_conversoes.csv`.
 
-## Tecnologias Utilizadas
+## Technologies Used
 
 - Python 3
-- Biblioteca `requests` para fazer requisições HTTP.
-- Biblioteca `pandas` para manipulação e exportação de dados.
+- `requests` library for making HTTP requests.
+- `pandas` library for data manipulation and export.
